@@ -10,6 +10,7 @@
 
 .view {
   display: flex;
+  align-items: center;
 }
 
 .editing {
@@ -27,5 +28,15 @@
   align-items: center;
   justify-content: space-between;
   flex: 1 1 auto;
-  padding: 15px 85px 15px 20px;
+  padding: 19.5px 85px 19px 20px;
+}
+
+.todo--edit {
+  margin: auto 0 7px;
+  right: 45px;
+}
+
+.todo--delete {
+  margin: auto 0 7px;
+  right: 10px;
 }

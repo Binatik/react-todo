@@ -1,0 +1,35 @@
+button {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: none;
+	font-size: 100%;
+	vertical-align: baseline;
+	font-family: inherit;
+	font-weight: inherit;
+	color: inherit;
+	appearance: none;
+  cursor: pointer;
+}
+
+.delete--primary {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  color: #cc9a9a;
+  transition: color 0.2s ease-out;
+}
+
+.delete--primary:hover {
+	color: #af5b5e;
+}
+
+.delete--md {
+  width: 30px;
+  height: 40px;
+  font-size: 30px;
+}
+
+.icon-delete:after {
+	content: '×';
+}
