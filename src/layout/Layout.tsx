@@ -1,7 +1,8 @@
 import { ILayout } from "./layout.types";
+import { Header } from "./header/Header";
 
 import "./header/Header.css";
-import { Header } from "./header/Header";
+
 
 function Layout({ children }: ILayout) {
   return (

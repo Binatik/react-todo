@@ -1,7 +1,10 @@
+import { NewTaskForm } from "../../module/todo/newTaskForm/NewTaskForm";
+
 function Header() {
   return (
     <header>
-      <h1>1</h1>
+      <h1>todos</h1>
+      <NewTaskForm />
     </header>
   );
 }

@@ -1,4 +1,5 @@
 import { Layout } from "../layout/Layout"
+import { Todo } from "../module/todo/todo/Todo"
 
 function App() {
 
@@ -6,11 +7,7 @@ function App() {
     <>
      <section className="todoapp">
       <Layout>
-        <ul className="todo-list">
-          <li className="completed"></li>
-          <li className="editing"></li>
-          <li></li>
-        </ul>
+        <Todo />
       </Layout>
      </section>
     </>

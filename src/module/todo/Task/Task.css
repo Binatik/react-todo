@@ -1,0 +1,31 @@
+.todo-item {
+  position: relative;
+  font-size: 24px;
+  border-bottom: 1px solid #ededed;
+}
+
+.todo-item:last-child {
+  border-bottom: none;
+}
+
+.view {
+  display: flex;
+}
+
+.editing {
+  border-bottom: none;
+  padding: 0;
+}
+
+.created {
+  font-size: 13px;
+  color: gray;
+}
+
+.todo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1 1 auto;
+  padding: 15px 85px 15px 20px;
+}
