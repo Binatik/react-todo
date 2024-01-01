@@ -31,6 +31,22 @@ function Task({ cb, task }: ITask) {
     });
   }
 
+  function updateTodo (event: React.KeyboardEvent<HTMLInputElement>, id: typeof task.id) {
+    if (event.code === "Enter") {
+      const value = event.currentTarget.value
+      
+      cb((prev) => {
+        const newState = prev?.map((item) => {
+          if (item.id === id) {
+            return { ...item, todoName: value, create: new Date, isEdit: false };
+          }
+          return item;
+        });
+        return newState;
+      });
+    }
+  }
+
   function deleteTask(event: React.MouseEvent<HTMLButtonElement>, id: typeof task.id) {
     cb((prev) => prev?.filter((item) => item.id !== id));
   }
@@ -57,7 +73,7 @@ function Task({ cb, task }: ITask) {
 
       {task.isEdit && (
         <div className="view">
-          <Input className="todo--edit-form" wide mode="edit" />
+          <Input onKeyDown={(event) => updateTodo(event, task.id)} className="todo--edit-form" wide mode="edit" />
         </div>
       )}
     </li>
