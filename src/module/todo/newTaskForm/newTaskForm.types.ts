@@ -1,9 +1,12 @@
 import { InputHTMLAttributes } from "react";
 
+
+
 export type INewTask = {
   id: string,
   todoName: string,
-  isComplited: boolean
+  isEdit: boolean
+  isCoplited: boolean
   create: Date
 }
 

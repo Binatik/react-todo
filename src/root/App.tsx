@@ -11,8 +11,8 @@ function App() {
   return (
     <>
       <section className="todoapp">
-        <Layout cb={setTodos}>
-          <Todo />
+        <Layout cb={setTodos}> 
+          <Todo cb={setTodos} tasks={todos} />
         </Layout>
       </section>
     </>

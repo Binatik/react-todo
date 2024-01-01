@@ -42,3 +42,8 @@
   margin: auto 0 7px;
   right: 15px;
 }
+
+.todo--edit-form {
+  padding: 12px 16px;
+  margin: 0 0 0 53px;
+}
