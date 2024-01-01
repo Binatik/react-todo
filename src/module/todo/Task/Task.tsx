@@ -7,7 +7,7 @@ import classNames from "classnames";
 import "./Task.css";
 
 function Task({ cb, task }: ITask) {
-  function updateComplited(event: React.MouseEvent<HTMLInputElement>, id: typeof task.id) {
+  function updateComplited(id: typeof task.id) {
     cb((prev) => {
       const newState = prev?.map((item) => {
         if (item.id === id) {
@@ -19,7 +19,7 @@ function Task({ cb, task }: ITask) {
     });
   }
 
-  function updateEdit(event: React.MouseEvent<HTMLButtonElement>, id: typeof task.id) {
+  function updateEdit(id: typeof task.id) {
     cb((prev) => {
       const newState = prev?.map((item) => {
         if (item.id === id) {
@@ -34,7 +34,7 @@ function Task({ cb, task }: ITask) {
   function updateTodo (event: React.KeyboardEvent<HTMLInputElement>, id: typeof task.id) {
     if (event.code === "Enter") {
       const value = event.currentTarget.value
-      
+
       cb((prev) => {
         const newState = prev?.map((item) => {
           if (item.id === id) {
@@ -47,7 +47,7 @@ function Task({ cb, task }: ITask) {
     }
   }
 
-  function deleteTask(event: React.MouseEvent<HTMLButtonElement>, id: typeof task.id) {
+  function deleteTask(id: typeof task.id) {
     cb((prev) => prev?.filter((item) => item.id !== id));
   }
 
@@ -55,7 +55,7 @@ function Task({ cb, task }: ITask) {
     <li className="todo-item">
       {!task.isEdit && (
         <div className="view">
-          <Checkbox onClick={(event) => updateComplited(event, task.id)} mode="primary" />
+          <Checkbox onClick={() => updateComplited(task.id)} mode="primary" />
           <label className="todo">
             <span
               className={classNames("description", {
@@ -66,8 +66,8 @@ function Task({ cb, task }: ITask) {
             </span>
             <span className="created">{task.create.toJSON()}</span>
           </label>
-          <Edit onClick={(event) => updateEdit(event, task.id)} className="todo--edit" mode="primary" size="md" />
-          <Delete onClick={(event) => deleteTask(event, task.id)} className="todo--delete" mode="primary" size="md" />
+          <Edit onClick={() => updateEdit(task.id)} className="todo--edit" mode="primary" size="md" />
+          <Delete onClick={() => deleteTask(task.id)} className="todo--delete" mode="primary" size="md" />
         </div>
       )}
 
