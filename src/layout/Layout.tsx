@@ -4,10 +4,12 @@ import { Header } from "./header/Header";
 import "./header/Header.css";
 
 
-function Layout({ children }: ILayout) {
+function Layout({ children, cb }: ILayout) {
+  //What is prop drilling in React?
+
   return (
     <>
-      <Header />
+      <Header cb={cb} />
       <section className="main">{children}</section>
     </>
   );
