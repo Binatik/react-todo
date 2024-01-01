@@ -1,0 +1,29 @@
+.button--primary {
+  border: 1px solid transparent;
+}
+
+.button--primary:hover  {
+	border-color: rgba(175, 47, 47, 0.1);
+}
+
+.button--inline {
+  border: 1px solid transparent;
+}
+
+.button--inline:hover {
+  text-decoration: underline;
+}
+
+.button--selected {
+  cursor: default;
+	border-color: rgba(175, 47, 47, 0.2);
+}
+
+.button--selected:hover {
+	border-color: rgba(175, 47, 47, 0.2);
+}
+
+.button--md {
+  margin: 3px;
+  padding: 3px 7px;
+}

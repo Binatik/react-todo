@@ -1,11 +1,17 @@
 import { ButtonHTMLAttributes } from "react"
 
-export type IButtonEdit = ButtonHTMLAttributes<HTMLButtonElement> & {
-  mode: 'primary'
+export type IButton ={
+  mode: 'primary' | 'inline'
   size: 'md'
-}
+  children: React.ReactNode
+} & ButtonHTMLAttributes<HTMLButtonElement>
 
-export type IButtonDelete = ButtonHTMLAttributes<HTMLButtonElement> & {
+export type IButtonEdit ={
   mode: 'primary'
   size: 'md'
-}
+} & ButtonHTMLAttributes<HTMLButtonElement>
+
+export type IButtonDelete = {
+  mode: 'primary'
+  size: 'md'
+} & ButtonHTMLAttributes<HTMLButtonElement>

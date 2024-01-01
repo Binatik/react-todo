@@ -28,15 +28,17 @@
   align-items: center;
   justify-content: space-between;
   flex: 1 1 auto;
-  padding: 19.5px 85px 19px 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 19.5px 90px 19px 20px;
 }
 
 .todo--edit {
   margin: auto 0 7px;
-  right: 45px;
+  right: 50px;
 }
 
 .todo--delete {
   margin: auto 0 7px;
-  right: 10px;
+  right: 15px;
 }

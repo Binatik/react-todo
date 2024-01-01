@@ -1,11 +1,13 @@
 import classNames from "classnames";
 import { IList } from "./list.types";
 
+import './List.css'
+
 function List({ children, mode, className }: IList) {
   return (
     <ul
       className={classNames(className, {
-        ["ul--primary"]: mode === "primary",
+        ["list--primary"]: mode === "primary",
       })}
     >
       {children}

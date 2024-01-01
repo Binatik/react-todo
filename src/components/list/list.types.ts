@@ -1,6 +1,6 @@
 import { HTMLAttributes } from "react"
 
-export type IList = HTMLAttributes<HTMLElement> & {
+export type IList = {
   children: React.ReactNode
-  mode?: 'primary'
-}
+  mode: 'primary'
+} & HTMLAttributes<HTMLElement>

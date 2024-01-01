@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { IButtonEdit } from "./button.types";
-import './Edit.css'
+import "./Edit.css";
 
 function Edit({ mode, size, className }: IButtonEdit) {
   return (
