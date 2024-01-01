@@ -8,7 +8,7 @@ function Todo({cb, tasks}: ITodo) {
   return (
     <>
       <List mode="primary" className="todo-list">
-        {tasks?.length && tasks.map((task) => <Task key={task.id} task={task} cb={cb} />)}
+        {tasks?.length && tasks.map((task) => <Task key={task.id} task={task} cb={cb} />) || ''}
       </List>
       <TasksFilter />
     </>
