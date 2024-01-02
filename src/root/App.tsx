@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { Layout } from "../layout/Layout";
 import { Todo } from "../module/todo/todo/Todo";
-import { INewTask } from "../module/todo/newTaskForm/newTaskForm.types";
+import { ITask } from "../module/todo/newTaskForm/newTaskForm.types";
 
 function App() {
-  const [todos, setTodos] = useState<INewTask[]>([])
+  const [todos, setTodos] = useState<ITask[]>([])
 
   return (
     <>
       <section className="todoapp">
-        <Layout cb={setTodos}> 
-          <Todo cb={setTodos} tasks={todos} />
+        <Layout setTodos={setTodos}> 
+          <Todo setTodos={setTodos} tasks={todos} />
         </Layout>
       </section>
     </>

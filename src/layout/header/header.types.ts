@@ -1,6 +1,6 @@
 import { HTMLAttributes } from "react";
-import { INewTask } from "../../module/todo/newTaskForm/newTaskForm.types";
+import { ITask } from "../../module/todo/newTaskForm/newTaskForm.types";
 
-export type IHeader = {
-  cb:  React.Dispatch<React.SetStateAction<INewTask[]>>
+export type IHeaderProps = {
+  setTodos:  React.Dispatch<React.SetStateAction<ITask[]>>
 } & HTMLAttributes<HTMLElement>

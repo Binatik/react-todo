@@ -1,11 +1,11 @@
 import { NewTaskForm } from "../../module/todo/newTaskForm/NewTaskForm";
-import { IHeader } from "./header.types";
+import { IHeaderProps } from "./header.types";
 
-function Header({cb}: IHeader) {
+function Header({setTodos}: IHeaderProps) {
   return (
     <header>
       <h1>todos</h1>
-      <NewTaskForm cb={cb}  />
+      <NewTaskForm setTodos={setTodos}  />
     </header>
   );
 }

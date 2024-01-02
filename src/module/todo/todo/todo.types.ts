@@ -1,7 +1,10 @@
 import { HTMLAttributes } from "react";
-import { INewTask } from "../newTaskForm/newTaskForm.types";
+import { ITask } from "../newTaskForm/newTaskForm.types";
 
-export type ITodo = {
-  tasks: Array<INewTask>
-  cb:  React.Dispatch<React.SetStateAction<INewTask[]>>
+export type ITodoProps = {
+  tasks: Array<ITask>
+  setTodos: React.Dispatch<React.SetStateAction<ITask[]>>
 } & HTMLAttributes<HTMLElement>
+
+export type ITaskFilter = {
+} & ITask

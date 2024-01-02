@@ -1,15 +1,15 @@
-import { ILayout } from "./layout.types";
+import { ILayoutProps } from "./layout.types";
 import { Header } from "./header/Header";
 
 import "./header/Header.css";
 
 
-function Layout({ children, cb }: ILayout) {
+function Layout({ children, setTodos }: ILayoutProps) {
   //What is prop drilling in React?
 
   return (
     <>
-      <Header cb={cb} />
+      <Header setTodos={setTodos} />
       <section className="main">{children}</section>
     </>
   );

@@ -1,21 +1,25 @@
 import { Input } from "../../../components/input/Input";
-import { INewTask, INewTaskForm } from "./newTaskForm.types";
+import { ITask, INewTaskFormProps } from "./newTaskForm.types";
 import { v4 as uuid } from "uuid";
 import "./NewTaskForm.css";
 
-function NewTaskForm({ cb }: INewTaskForm) {
+function NewTaskForm({ setTodos }: INewTaskFormProps) {
   function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
-    const todo: INewTask = {
+    if (event.currentTarget.value.trim() === '') {
+      return;
+    }
+
+    const todo: ITask = {
       id: uuid(),
       todoName: event.currentTarget.value,
       create: new Date(),
       isComplited: false,
       status: "none",
-      filter: "all",
+      filter: 'all'
     };
 
     if (event.code === "Enter") {
-      cb((prev) => [...prev, todo]);
+      setTodos((prev) => [...prev, todo]);
     }
   }
 

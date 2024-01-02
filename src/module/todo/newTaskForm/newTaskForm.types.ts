@@ -1,16 +1,14 @@
 import { InputHTMLAttributes } from "react";
 
-
-
-export type INewTask = {
+export type ITask = {
   id: string,
   todoName: string,
   isComplited: boolean,
   create: Date,
   status: 'edit' | 'none',
-  filter: 'all' | 'active' | 'complited'
+  filter: 'all' | 'active' | 'complited' | 'clearComplited'
 }
 
-export type INewTaskForm = {
-  cb: React.Dispatch<React.SetStateAction<INewTask[]>>
+export type INewTaskFormProps = {
+  setTodos: React.Dispatch<React.SetStateAction<ITask[]>>
 } & InputHTMLAttributes<HTMLInputElement>

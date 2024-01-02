@@ -2,15 +2,15 @@ import { Delete } from "../../../components/button/Delete";
 import { Edit } from "../../../components/button/Edit";
 import { Checkbox } from "../../../components/input/Checkbox";
 import { Input } from "../../../components/input/Input";
-import { INewTask } from "../newTaskForm/newTaskForm.types";
-import { ITask } from "./task.types";
+import { ITaskProps } from "./task.types";
+import { ITask } from "../newTaskForm/newTaskForm.types";
 import classNames from "classnames";
 
 import "./Task.css";
 
-function Task({ cb, task }: ITask) {
+function Task({ setTodos, task }: ITaskProps) {
   function updateComplited(id: typeof task.id) {
-    cb((prev) => {
+    setTodos((prev) => {
       const newState = prev.map((item) => {
         if (item.id === id) {
           return { ...item, isComplited: !item.isComplited };
@@ -22,8 +22,8 @@ function Task({ cb, task }: ITask) {
   }
 
   function updateEdit(id: typeof task.id) {
-    cb((prev) => {
-      const newState = prev.map<INewTask>((item) => {
+    setTodos((prev) => {
+      const newState = prev.map<ITask>((item) => {
         if (item.id === id) {
           return { ...item, status: "edit" };
         }
@@ -37,8 +37,8 @@ function Task({ cb, task }: ITask) {
     if (event.code === "Enter") {
       const value = event.currentTarget.value;
 
-      cb((prev) => {
-        const newState = prev.map<INewTask>((item) => {
+      setTodos((prev) => {
+        const newState = prev.map<ITask>((item) => {
           if (item.id === id) {
             return { ...item, todoName: value, status: "none", create: new Date() };
           }
@@ -50,14 +50,14 @@ function Task({ cb, task }: ITask) {
   }
 
   function deleteTask(id: typeof task.id) {
-    cb((prev) => prev.filter((item) => item.id !== id));
+    setTodos((prev) => prev.filter((item) => item.id !== id));
   }
 
   return (
     <li className="todo-item">
       {task.status === "none" && (
         <div className="view">
-          <Checkbox checked={task.isComplited} onClick={() => updateComplited(task.id)} mode="primary" />
+          <Checkbox defaultChecked={task.isComplited} onClick={() => updateComplited(task.id)} mode="primary" />
           <label className="todo">
             <span
               className={classNames("description", {

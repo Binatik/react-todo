@@ -1,16 +1,47 @@
 import { List } from "../../../components/list/List";
 import { Task } from "../Task/Task";
 import { TasksFilter } from "../tasksFilter/TasksFilter";
-import "./Todo.css";
-import { ITodo } from "./todo.types";
+import { ITaskFilter, ITodoProps } from "./todo.types";
+import { useEffect, useState } from "react";
 
-function Todo({cb, tasks}: ITodo) {
+import "./Todo.css";
+
+function Todo({setTodos, tasks}: ITodoProps) {
+  const [filterTasks, setFilterTasks] = useState<ITaskFilter[]>([])
+
+  useEffect(() => {
+    setFilterTasks(tasks)
+  }, [tasks]);
+  
+
+  useEffect(() => {
+    if (tasks.length && tasks[0].filter === 'complited') {
+      const complitedTasks = tasks.filter((task) => task.isComplited);
+      setFilterTasks(complitedTasks)
+    }
+
+    if (tasks.length && tasks[0].filter === 'clearComplited') {
+      const clearTasks = filterTasks.filter((task) => !task.isComplited);
+      setTodos(clearTasks)
+    }
+
+    if (tasks.length && tasks[0].filter === 'all') {
+      setFilterTasks(tasks)
+    }
+
+    if (tasks.length && tasks[0].filter === 'active') {
+      const activeTasks = tasks.filter((task) => task.status === 'edit');
+      setFilterTasks(activeTasks)
+    }
+  }, [tasks]);
+
+
   return (
     <>
       <List mode="primary" className="todo-list">
-        {tasks?.length && tasks.map((task) => <Task key={task.id} task={task} cb={cb} />) || ''}
+        {filterTasks.length && filterTasks.map((task) => <Task key={task.id} task={task} setTodos={setTodos} />) || ''}
       </List>
-      <TasksFilter />
+      <TasksFilter setTodos={setTodos} counter={filterTasks.length} />
     </>
   );
 }
