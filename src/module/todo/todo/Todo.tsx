@@ -23,6 +23,7 @@ function Todo({setTodos, tasks}: ITodoProps) {
     if (tasks.length && tasks[0].filter === 'clearComplited') {
       const clearTasks = tasks.filter((task) => !task.isComplited);
       setTodos(clearTasks)
+      setFilterTasks(clearTasks)
     }
 
     if (tasks.length && tasks[0].filter === 'all') {
