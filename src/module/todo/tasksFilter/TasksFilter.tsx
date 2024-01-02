@@ -23,9 +23,7 @@ function TasksFilter({setTodos, counter}: ITasksFilter) {
   }
 
   function clearComplited() {
-    setTodos((prev) => prev.map((item) => {
-      return {...item, filter: 'clearComplited'}
-    }))
+    setTodos((prev) => prev.filter((task) => !task.isComplited))
   }
   
   return (

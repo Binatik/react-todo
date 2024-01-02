@@ -20,12 +20,6 @@ function Todo({setTodos, tasks}: ITodoProps) {
       setFilterTasks(complitedTasks)
     }
 
-    if (tasks.length && tasks[0].filter === 'clearComplited') {
-      const clearTasks = tasks.filter((task) => !task.isComplited);
-      setTodos(clearTasks)
-      setFilterTasks(clearTasks)
-    }
-
     if (tasks.length && tasks[0].filter === 'all') {
       setFilterTasks(tasks)
     }
