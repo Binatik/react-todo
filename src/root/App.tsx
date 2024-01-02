@@ -4,9 +4,7 @@ import { Todo } from "../module/todo/todo/Todo";
 import { INewTask } from "../module/todo/newTaskForm/newTaskForm.types";
 
 function App() {
-  const [todos, setTodos] = useState<INewTask[] | undefined>([])
-
-  console.log(todos)
+  const [todos, setTodos] = useState<INewTask[]>([])
 
   return (
     <>

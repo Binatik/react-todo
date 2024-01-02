@@ -8,13 +8,14 @@ function NewTaskForm({ cb }: INewTaskForm) {
     const todo: INewTask = {
       id: uuid(),
       todoName: event.currentTarget.value,
-      isEdit: false,
-      isCoplited: false,
       create: new Date(),
+      isComplited: false,
+      status: "none",
+      filter: "all",
     };
 
     if (event.code === "Enter") {
-      cb((prev) => [...(prev || []), todo]);
+      cb((prev) => [...prev, todo]);
     }
   }
 

@@ -2,16 +2,18 @@ import { Delete } from "../../../components/button/Delete";
 import { Edit } from "../../../components/button/Edit";
 import { Checkbox } from "../../../components/input/Checkbox";
 import { Input } from "../../../components/input/Input";
+import { INewTask } from "../newTaskForm/newTaskForm.types";
 import { ITask } from "./task.types";
 import classNames from "classnames";
+
 import "./Task.css";
 
 function Task({ cb, task }: ITask) {
   function updateComplited(id: typeof task.id) {
     cb((prev) => {
-      const newState = prev?.map((item) => {
+      const newState = prev.map((item) => {
         if (item.id === id) {
-          return { ...item, isCoplited: !item.isCoplited };
+          return { ...item, isComplited: !item.isComplited };
         }
         return item;
       });
@@ -21,9 +23,9 @@ function Task({ cb, task }: ITask) {
 
   function updateEdit(id: typeof task.id) {
     cb((prev) => {
-      const newState = prev?.map((item) => {
+      const newState = prev.map<INewTask>((item) => {
         if (item.id === id) {
-          return { ...item, isEdit: true };
+          return { ...item, status: "edit" };
         }
         return item;
       });
@@ -31,14 +33,14 @@ function Task({ cb, task }: ITask) {
     });
   }
 
-  function updateTodo (event: React.KeyboardEvent<HTMLInputElement>, id: typeof task.id) {
+  function updateTodo(event: React.KeyboardEvent<HTMLInputElement>, id: typeof task.id) {
     if (event.code === "Enter") {
-      const value = event.currentTarget.value
+      const value = event.currentTarget.value;
 
       cb((prev) => {
-        const newState = prev?.map((item) => {
+        const newState = prev.map<INewTask>((item) => {
           if (item.id === id) {
-            return { ...item, todoName: value, create: new Date, isEdit: false };
+            return { ...item, todoName: value, status: "none", create: new Date() };
           }
           return item;
         });
@@ -48,18 +50,18 @@ function Task({ cb, task }: ITask) {
   }
 
   function deleteTask(id: typeof task.id) {
-    cb((prev) => prev?.filter((item) => item.id !== id));
+    cb((prev) => prev.filter((item) => item.id !== id));
   }
 
   return (
     <li className="todo-item">
-      {!task.isEdit && (
+      {task.status === "none" && (
         <div className="view">
-          <Checkbox onClick={() => updateComplited(task.id)} mode="primary" />
+          <Checkbox checked={task.isComplited} onClick={() => updateComplited(task.id)} mode="primary" />
           <label className="todo">
             <span
               className={classNames("description", {
-                ["complited"]: task.isCoplited,
+                ["complited"]: task.isComplited,
               })}
             >
               {task.todoName}
@@ -71,7 +73,7 @@ function Task({ cb, task }: ITask) {
         </div>
       )}
 
-      {task.isEdit && (
+      {task.status === "edit" && (
         <div className="view">
           <Input onKeyDown={(event) => updateTodo(event, task.id)} className="todo--edit-form" wide mode="edit" />
         </div>
