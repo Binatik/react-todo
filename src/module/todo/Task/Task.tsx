@@ -6,7 +6,6 @@ import { ITaskProps } from "./task.types";
 import { ITask } from "../newTaskForm/newTaskForm.types";
 import { formatDistanceToNow } from "date-fns/formatDistanceToNow";
 import classNames from "classnames";
-import { useEffect, useState } from "react";
 import "./Task.css";
 
 function Task({ setTodos, task }: ITaskProps) {
