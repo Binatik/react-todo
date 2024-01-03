@@ -1,7 +1,7 @@
 import { ButtonHTMLAttributes } from "react"
 
 export type IButton ={
-  mode: 'primary' | 'inline'
+  mode: 'primary' | 'inline' | 'selected'
   size: 'md'
   children: React.ReactNode
 } & ButtonHTMLAttributes<HTMLButtonElement>

@@ -6,7 +6,7 @@ export type ITask = {
   isComplited: boolean,
   create: Date,
   status: 'edit' | 'none',
-  filter: 'all' | 'active' | 'complited' | 'clearComplited'
+  filter: 'all' | 'active' | 'complited'
 }
 
 export type INewTaskFormProps = {

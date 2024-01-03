@@ -9,6 +9,7 @@ function Button({ mode, size, children, className, ...props }: IButton) {
       className={classNames(className, {
         ["button--inline"]: mode === "inline",
         ["button--primary"]: mode === "primary",
+        ["button--selected button--primary"]: mode === "selected",
         ["button--md"]: size === "md",
       })}
       type="button"

@@ -40,7 +40,7 @@ function Todo({setTodos, tasks}: ITodoProps) {
       <List mode="primary" className="todo-list">
         {filterTasks.length && filterTasks.map((task) => <Task key={task.id} task={task} setTodos={setTodos} />) || ''}
       </List>
-      <TasksFilter setTodos={setTodos} counter={getNotComplitedTasks()} />
+      <TasksFilter tasks={tasks} setTodos={setTodos} counter={getNotComplitedTasks()} />
     </>
   );
 }
