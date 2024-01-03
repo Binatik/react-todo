@@ -9,6 +9,10 @@ import "./Todo.css";
 function Todo({setTodos, tasks}: ITodoProps) {
   const [filterTasks, setFilterTasks] = useState<ITaskFilter[]>([])
 
+  function getNotComplitedTasks () {
+    return tasks.filter((item) => !item.isComplited).length
+  }
+
   useEffect(() => {
     setFilterTasks(tasks)
   }, [tasks]);
@@ -36,7 +40,7 @@ function Todo({setTodos, tasks}: ITodoProps) {
       <List mode="primary" className="todo-list">
         {filterTasks.length && filterTasks.map((task) => <Task key={task.id} task={task} setTodos={setTodos} />) || ''}
       </List>
-      <TasksFilter setTodos={setTodos} counter={filterTasks.length} />
+      <TasksFilter setTodos={setTodos} counter={getNotComplitedTasks()} />
     </>
   );
 }
