@@ -11,7 +11,6 @@ import "./Task.css";
 function Task({ setTodos, task }: ITaskProps) {
   const timeAgo = formatDistanceToNow(task.create, { addSuffix: true, includeSeconds: true });
 
-
   function updateComplited(id: typeof task.id) {
     setTodos((prev) => {
       const newState = prev.map((item) => {
@@ -57,7 +56,7 @@ function Task({ setTodos, task }: ITaskProps) {
   }
 
   return (
-    <li className="todo-item">
+    <>
       {task.status === "none" && (
         <div className="view">
           <Checkbox defaultChecked={task.isComplited} onClick={() => updateComplited(task.id)} mode="primary" />
@@ -81,7 +80,7 @@ function Task({ setTodos, task }: ITaskProps) {
           <Input onKeyDown={(event) => updateTodo(event, task.id)} className="todo--edit-form" wide mode="edit" />
         </div>
       )}
-    </li>
+    </>
   );
 }
 
