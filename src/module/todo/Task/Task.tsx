@@ -4,11 +4,15 @@ import { Checkbox } from "../../../components/input/Checkbox";
 import { Input } from "../../../components/input/Input";
 import { ITaskProps } from "./task.types";
 import { ITask } from "../newTaskForm/newTaskForm.types";
+import { formatDistanceToNow } from "date-fns/formatDistanceToNow";
 import classNames from "classnames";
-
+import { useEffect, useState } from "react";
 import "./Task.css";
 
 function Task({ setTodos, task }: ITaskProps) {
+  const timeAgo = formatDistanceToNow(task.create, { addSuffix: true, includeSeconds: true });
+
+
   function updateComplited(id: typeof task.id) {
     setTodos((prev) => {
       const newState = prev.map((item) => {
@@ -66,7 +70,7 @@ function Task({ setTodos, task }: ITaskProps) {
             >
               {task.todoName}
             </span>
-            <span className="created">{task.create.toJSON()}</span>
+            <span className="created">{`created ${timeAgo}`}</span>
           </label>
           <Edit onClick={() => updateEdit(task.id)} className="todo--edit" mode="primary" size="md" />
           <Delete onClick={() => deleteTask(task.id)} className="todo--delete" mode="primary" size="md" />
