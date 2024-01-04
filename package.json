@@ -47,10 +47,10 @@
     }
   },
   "lint-staged": {
-    "*.tsx": [
-      "npm run lint:fix",
-      "npm run format",
-      "git add"
-    ]
+      "src/**/*.{js,jsx,ts,tsx,json,css}": [
+        "eslint ./src --fix",
+        "prettier --write",
+        "git add"
+      ]
+    }
   }
-}
