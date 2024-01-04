@@ -3,7 +3,6 @@ import { Header } from "./header/Header";
 
 import "./header/Header.css";
 
-
 function Layout({ children, setTodos }: ILayoutProps) {
   //What is prop drilling in React?
 

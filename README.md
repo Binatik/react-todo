@@ -1,4 +1,5 @@
 # Todo-Kata React + TS
+
 ##### Cписок дел c возможностью форматировать и фильтровать задачи выполненный на React без API и сохранение задач в store.
 
 ---
@@ -6,6 +7,7 @@
 <img width="1162" alt="image" src="https://github.com/Binatik/images/assets/47430210/c5db9199-701a-4993-b111-7d40e8fa315a">
 
 ## Проверить
+
 Проверить последнюю версию web приложения можно [здесь](https://react-todo-kata.netlify.app/).
 
 ## Запуск
@@ -27,22 +29,24 @@ $ npm dev # Запуск в dev  режиме
 //scripts vite
 "dev": "vite",
 "build": "tsc && vite build",
-"lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+"lint": "eslint ./src",
+"lint:fix": "eslint ./src --fix",
+"format": "prettier ./src --write",
 "preview": "vite preview"
 ```
 
 ## Возможности:
 
--   Cоздать задачу
--   Изменить задачу
--   Пометить задачу активной
--   Удалить задачу
--   Фильтровать задачи
--   Удалять выполненные задачи
+- Cоздать задачу
+- Изменить задачу
+- Пометить задачу активной
+- Удалить задачу
+- Фильтровать задачи
+- Удалять выполненные задачи
 
 ## Оптимизации
 
 Блокировка отправки пустой строки
 Обновление form control
 
-``Поддержка Ege, Chrome, Yandex последних версий``
+`Поддержка Ege, Chrome, Yandex последних версий`

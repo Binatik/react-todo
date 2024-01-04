@@ -40,13 +40,13 @@
 
 .description {
   word-break: break-all;
-    display: block;
-    transition: color 0.4s;
-    font-weight: 400;
-    color: #4d4d4d;
+  display: block;
+  transition: color 0.4s;
+  font-weight: 400;
+  color: #4d4d4d;
 }
 
 .complited {
   color: #cdcdcd;
-  text-decoration: line-through; 
+  text-decoration: line-through;
 }

@@ -1,6 +1,6 @@
 import { IInput } from "./Input.types";
 import classNames from "classnames";
-import './Input.css'
+import "./Input.css";
 
 function Input({ mode, wide, className, ...props }: IInput) {
   return (

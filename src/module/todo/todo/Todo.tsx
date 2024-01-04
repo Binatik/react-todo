@@ -44,7 +44,11 @@ function Todo({ setTodos, tasks }: ITodoProps) {
             ))
           : null}
       </List>
-      <TasksFilter tasks={tasks} setTodos={setTodos} counter={getNotComplitedTasks()} />
+      <TasksFilter
+        tasks={tasks}
+        setTodos={setTodos}
+        counter={getNotComplitedTasks()}
+      />
     </>
   );
 }

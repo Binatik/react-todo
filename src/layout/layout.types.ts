@@ -1,6 +1,6 @@
-import { ITask } from "../module/todo/newTaskForm/newTaskForm.types"
+import { ITask } from "../module/todo/newTaskForm/newTaskForm.types";
 
 export type ILayoutProps = {
-  setTodos: React.Dispatch<React.SetStateAction<ITask[]>>
-  children: React.ReactNode
-}
+  setTodos: React.Dispatch<React.SetStateAction<ITask[]>>;
+  children: React.ReactNode;
+};

@@ -28,7 +28,15 @@ function NewTaskForm({ setTodos }: INewTaskFormProps) {
   }
 
   return (
-    <Input onChange={(event) => setValue(event.currentTarget.value)} value={value} onKeyDown={handleKeyDown} mode="primary" wide className="new-todo" placeholder="What needs to be done?" />
+    <Input
+      onChange={(event) => setValue(event.currentTarget.value)}
+      value={value}
+      onKeyDown={handleKeyDown}
+      mode="primary"
+      wide
+      className="new-todo"
+      placeholder="What needs to be done?"
+    />
   );
 }
 

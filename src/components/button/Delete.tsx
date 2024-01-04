@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { IButtonDelete } from "./button.types";
-import './Delete.css'
+import "./Delete.css";
 
 function Delete({ mode, size, className, ...props }: IButtonDelete) {
   return (

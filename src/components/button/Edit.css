@@ -1,14 +1,14 @@
 button {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	background: none;
-	font-size: 100%;
-	vertical-align: baseline;
-	font-family: inherit;
-	font-weight: inherit;
-	color: inherit;
-	appearance: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: 100%;
+  vertical-align: baseline;
+  font-family: inherit;
+  font-weight: inherit;
+  color: inherit;
+  appearance: none;
   cursor: pointer;
 }
 
@@ -21,7 +21,7 @@ button {
 }
 
 .edit--primary:hover {
-	color: #af5b5e;
+  color: #af5b5e;
 }
 
 .edit--md {
@@ -31,5 +31,5 @@ button {
 }
 
 .icon-edit:after {
-	content: '✎';
+  content: "✎";
 }

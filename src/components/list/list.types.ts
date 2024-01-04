@@ -1,6 +1,6 @@
-import { HTMLAttributes } from "react"
+import { HTMLAttributes } from "react";
 
 export type IList = {
-  children: React.ReactNode
-  mode: 'primary'
-} & HTMLAttributes<HTMLElement>
+  children: React.ReactNode;
+  mode: "primary";
+} & HTMLAttributes<HTMLElement>;
