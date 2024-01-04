@@ -7,8 +7,11 @@ import { ITask } from "../newTaskForm/newTaskForm.types";
 import { formatDistanceToNow } from "date-fns/formatDistanceToNow";
 import classNames from "classnames";
 import "./Task.css";
+import { useState } from "react";
 
 function Task({ setTodos, task }: ITaskProps) {
+  const [value, setValue] = useState(task.todoName);
+
   const timeAgo = formatDistanceToNow(task.create, {
     addSuffix: true,
     includeSeconds: true,
@@ -38,12 +41,11 @@ function Task({ setTodos, task }: ITaskProps) {
     });
   }
 
-  function updateTodo(
-    event: React.KeyboardEvent<HTMLInputElement>,
-    id: typeof task.id,
-  ) {
+  function updateTodo(event: React.KeyboardEvent<HTMLInputElement>, id: typeof task.id) {
     if (event.code === "Enter") {
-      const value = event.currentTarget.value;
+      if (value === "") {
+        return;
+      }
 
       setTodos((prev) => {
         const newState = prev.map<ITask>((item) => {
@@ -70,11 +72,7 @@ function Task({ setTodos, task }: ITaskProps) {
     <>
       {task.status === "none" && (
         <div className="view">
-          <Checkbox
-            defaultChecked={task.isComplited}
-            onClick={() => updateComplited(task.id)}
-            mode="primary"
-          />
+          <Checkbox defaultChecked={task.isComplited} onClick={() => updateComplited(task.id)} mode="primary" />
           <label className="todo">
             <span
               className={classNames("description", {
@@ -85,28 +83,20 @@ function Task({ setTodos, task }: ITaskProps) {
             </span>
             <span className="created">{`created ${timeAgo}`}</span>
           </label>
-          <Edit
-            onClick={() => updateEdit(task.id)}
-            className="todo--edit"
-            mode="primary"
-            size="md"
-          />
-          <Delete
-            onClick={() => deleteTask(task.id)}
-            className="todo--delete"
-            mode="primary"
-            size="md"
-          />
+          <Edit onClick={() => updateEdit(task.id)} className="todo--edit" mode="primary" size="md" />
+          <Delete onClick={() => deleteTask(task.id)} className="todo--delete" mode="primary" size="md" />
         </div>
       )}
 
       {task.status === "edit" && (
         <div className="view">
           <Input
+            onChange={(event) => setValue(event.currentTarget.value)}
             onKeyDown={(event) => updateTodo(event, task.id)}
             className="todo--edit-form"
             wide
             mode="edit"
+            value={value}
           />
         </div>
       )}

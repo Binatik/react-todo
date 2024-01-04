@@ -28,7 +28,7 @@ function Todo({ setTodos, tasks }: ITodoProps) {
     }
 
     if (tasks.length && tasks[0].filter === "active") {
-      const activeTasks = tasks.filter((task) => task.status === "edit");
+      const activeTasks = tasks.filter((task) => !task.isComplited);
       setFilterTasks(activeTasks);
     }
   }, [tasks]);

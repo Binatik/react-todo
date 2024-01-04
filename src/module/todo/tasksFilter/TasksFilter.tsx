@@ -8,7 +8,7 @@ function TasksFilter({ setTodos, counter, tasks }: ITasksFilter) {
     setTodos((prev) =>
       prev.map((item) => {
         return { ...item, filter: "complited" };
-      })
+      }),
     );
   }
 
@@ -16,7 +16,7 @@ function TasksFilter({ setTodos, counter, tasks }: ITasksFilter) {
     setTodos((prev) =>
       prev.map((item) => {
         return { ...item, filter: "active" };
-      })
+      }),
     );
   }
 
@@ -24,7 +24,7 @@ function TasksFilter({ setTodos, counter, tasks }: ITasksFilter) {
     setTodos((prev) =>
       prev.map((item) => {
         return { ...item, filter: "all" };
-      })
+      }),
     );
   }
 
@@ -37,17 +37,29 @@ function TasksFilter({ setTodos, counter, tasks }: ITasksFilter) {
       <span className="todo-count">{counter} items left</span>
       <List className="filters" mode="primary">
         <li>
-          <Button onClick={setAll} size="md" mode={tasks[0]?.filter === "all" ? "selected" : "primary"}>
+          <Button
+            onClick={setAll}
+            size="md"
+            mode={tasks[0]?.filter === "all" ? "selected" : "primary"}
+          >
             All
           </Button>
         </li>
         <li>
-          <Button onClick={setActive} size="md" mode={tasks[0]?.filter === "active" ? "selected" : "primary"}>
+          <Button
+            onClick={setActive}
+            size="md"
+            mode={tasks[0]?.filter === "active" ? "selected" : "primary"}
+          >
             Active
           </Button>
         </li>
         <li>
-          <Button onClick={setComplited} size="md" mode={tasks[0]?.filter === "complited" ? "selected" : "primary"}>
+          <Button
+            onClick={setComplited}
+            size="md"
+            mode={tasks[0]?.filter === "complited" ? "selected" : "primary"}
+          >
             Complited
           </Button>
         </li>
