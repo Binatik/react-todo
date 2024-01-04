@@ -49,7 +49,7 @@
   "lint-staged": {
       "src/**/*.{js,jsx,ts,tsx,json,css}": [
         "eslint ./src --fix",
-        "prettier --write",
+        "prettier ./src --write",
         "git add"
       ]
     }
