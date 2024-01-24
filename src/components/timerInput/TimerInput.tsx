@@ -1,11 +1,12 @@
-import { IInputProps } from "./Input.types";
 import classNames from "classnames";
-import "./Input.css";
+import { ITimerInputProps } from "./TimerInput.types";
 
-function Input({ mode, wide, className, ...props }: IInputProps) {
+function TimerInput({ mode, wide, className, ...props }: ITimerInputProps) {
   return (
     <input
       {...props}
+      pattern="[0-9]*"
+      type="text"
       className={classNames(className, {
         ["input--primary"]: mode === "primary",
         ["input--edit"]: mode === "edit",
@@ -15,4 +16,4 @@ function Input({ mode, wide, className, ...props }: IInputProps) {
   );
 }
 
-export { Input };
+export { TimerInput };

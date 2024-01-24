@@ -1,4 +1,16 @@
 .new-todo {
   margin: 0;
-  padding: 16px 16px 16px 67px;
+  padding: 16px;
+}
+
+.new-todo-form {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 0;
+}
+
+.new-todo-form__timer {
+  width: 80px;
+  flex: 1;
+  padding: 16px;
 }

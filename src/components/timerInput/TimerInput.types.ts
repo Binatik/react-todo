@@ -1,6 +1,6 @@
 import { InputHTMLAttributes } from "react";
 
-export type IInputProps = {
+export type ITimerInputProps = {
   mode: "primary" | "edit";
   wide?: boolean;
-} & InputHTMLAttributes<HTMLInputElement>;
+} & Omit<InputHTMLAttributes<HTMLInputElement>, "type">;

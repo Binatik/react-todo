@@ -1,5 +1,12 @@
 import { InputHTMLAttributes } from "react";
 
+export type ITimer = {
+  seconds: number
+  minutes: number
+  hours: number
+  days: number
+}
+
 export type ITask = {
   id: string;
   todoName: string;
