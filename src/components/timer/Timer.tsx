@@ -1,84 +1,119 @@
-import classNames from 'classnames'
-import { ITimerProps } from './Timer.types'
+import classNames from 'classnames';
+import { ITimerProps } from './Timer.types';
 import { memo, useEffect, useRef, useState } from 'react';
-import './Timer.css'
+import './Timer.css';
 
-type ITrigger = 'stop' | 'play' | 'default'
-let templateTrigger: ITrigger = 'default'
+type ITrigger = 'stop' | 'play' | 'default';
+let templateTrigger: ITrigger = 'default';
 
-const Timer = memo(function Timer({ mode, startDeadline, deadline, className }: ITimerProps) {
+const Timer = memo(function Timer({ mode, setUpdateDeadline, startDeadline, lastDeadline, className }: ITimerProps) {
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [trigger, setTrigger] = useState(templateTrigger);
+  const [hasDeadline, setHasDeadline] = useState(false)
 
-  const idIntervalRef = useRef(0)
+  const start = startDeadline.getTime();
+  const last = lastDeadline.getTime();
 
-  console.log(startDeadline)
+  const idIntervalRef = useRef<null | number>(null);
+
   useEffect(() => {
     if (trigger === 'default') {
-      idIntervalRef.current = setInterval(() => {
-        getTime()
-      }, 1000);
-
+      startInterval();
     }
 
     if (trigger === 'play') {
-      idIntervalRef.current = setInterval(() => {
-        getTime()
-      }, 1000);
+      startInterval();
     }
 
-    getTime()
-    return () => clearInterval(idIntervalRef.current);
+    return () => {
+      stopInterval();
+    };
   }, [trigger]);
 
-  function getTime() {
-    const time = deadline.getTime() - Date.now()
+  function startInterval() {
+    stopInterval();
 
-    if (time <= 0) {
-      setDays(0);
-      setHours(0);
-      setMinutes(0);
-      setSeconds(0);
-      return;
+    let currentTime = last;
+
+    idIntervalRef.current = setInterval(() => {
+      currentTime -= 1000; // уменьшаем время на 1 секунду
+
+      if (currentTime < start) {
+        stopInterval(); // останавливаем интервал, если достигли start
+        setHasDeadline(true)
+      }
+
+      const remainingTime = new Date(currentTime - start);
+      setUpdateDeadline(new Date(currentTime))
+
+      setDays(Math.floor(remainingTime.getTime() / (1000 * 60 * 60 * 24)));
+      setHours(Math.floor((remainingTime.getTime() / (1000 * 60 * 60)) % 24));
+      setMinutes(Math.floor((remainingTime.getTime() / 1000 / 60) % 60));
+      setSeconds(Math.floor((remainingTime.getTime() / 1000) % 60));
+    }, 1000);
+  }
+
+  function stopInterval() {
+    if (idIntervalRef.current) {
+      clearInterval(idIntervalRef.current);
+      idIntervalRef.current = null;
     }
-
-    setDays(Math.floor(time / (1000 * 60 * 60 * 24)));
-    setHours(Math.floor((time / (1000 * 60 * 60)) % 24));
-    setMinutes(Math.floor((time / 1000 / 60) % 60));
-    setSeconds(Math.floor((time / 1000) % 60));
   }
 
   function onPlayTimer() {
-    if (trigger === 'default') {
-      return
+    if (trigger === 'default' || trigger === 'play') {
+      return;
     }
 
-    setTrigger('play')
-    templateTrigger = 'play'
+    setTrigger('play');
+    templateTrigger = 'play';
   }
 
   function onStopTimer() {
-    clearInterval(idIntervalRef.current);
-    setTrigger('stop')
-
-    templateTrigger = 'stop'
+    stopInterval();
+    setTrigger('stop');
+    templateTrigger = 'stop';
   }
 
-  return (
-    <div className="timer">
-      <button type='button' className='button--hidden'>Заглушка</button>
-      <button onClick={onPlayTimer} type="button" className={classNames('timer__play', className, {
-        ['timer--primary']: mode === 'primary'
-      })}>▶</button>
-      <button onClick={onStopTimer} type="button" className={classNames('timer__stop', className, {
-        ['timer--primary']: mode === 'primary'
-      })}>⏸</button>
-      {minutes === 0 && seconds === 0 ? <span>Время истекло</span> : <span>{days}:{hours}:{minutes}:{seconds}</span>}
-    </div>
-  )
-})
+  function renderTimer() {
+    return (
+      <div className="timer">
+        <button type="button" className="button--hidden">
+          Заглушка
+        </button>
+        <button
+          onClick={onPlayTimer}
+          type="button"
+          className={classNames('timer__play', className, {
+            ['timer--primary']: mode === 'primary',
+          })}
+        >
+          ▶
+        </button>
+        <button
+          onClick={onStopTimer}
+          type="button"
+          className={classNames('timer__stop', className, {
+            ['timer--primary']: mode === 'primary',
+          })}
+        >
+          ⏸
+        </button>
+        <span>
+          {days}:{hours}:{minutes}:{seconds}
+        </span>
+      </div>
+    );
+  }
 
-export { Timer }
+  return hasDeadline ? (
+    <span className="timer__off">Время истекло</span>
+  ) : (
+    renderTimer()
+  );
+});
+
+export { Timer };

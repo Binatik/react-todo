@@ -7,17 +7,28 @@ import { ITask } from "../newTaskForm/newTaskForm.types";
 import { formatDistanceToNow } from "date-fns/formatDistanceToNow";
 import classNames from "classnames";
 import "./Task.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Timer } from "../../../components/timer/Timer";
 
 function Task({ setTodos, task }: ITaskProps) {
   const [value, setValue] = useState(task.todoName);
+  const [updateDeadline, setUpdateDeadline] = useState(task.deadline)
 
   const timeAgo = formatDistanceToNow(task.create, {
     addSuffix: true,
     includeSeconds: true,
   });
 
+  useEffect(() => {
+    setTodos((prev) => {
+      return prev.map((_task) => {
+        if (task.id === _task.id) {
+          return { ...task, deadline: updateDeadline } as ITask
+        }
+        return _task
+      })
+    })
+  }, [updateDeadline])
   function updateComplited(id: typeof task.id) {
     setTodos((prev) => {
       const newState = prev.map((item) => {
@@ -82,7 +93,7 @@ function Task({ setTodos, task }: ITaskProps) {
             >
               {task.todoName}
             </span>
-            <Timer mode="primary" startDeadline={task.create} deadline={task.deadline} />
+            <Timer mode="primary" setUpdateDeadline={setUpdateDeadline} startDeadline={task.create} lastDeadline={updateDeadline} />
             <span className="created">{`created ${timeAgo}`}</span>
           </label>
           <Edit onClick={() => updateEdit(task.id)} className="todo--edit" mode="primary" size="md" />
