@@ -8,6 +8,7 @@ import { formatDistanceToNow } from "date-fns/formatDistanceToNow";
 import classNames from "classnames";
 import "./Task.css";
 import { useState } from "react";
+import { Timer } from "../../../components/timer/Timer";
 
 function Task({ setTodos, task }: ITaskProps) {
   const [value, setValue] = useState(task.todoName);
@@ -81,6 +82,7 @@ function Task({ setTodos, task }: ITaskProps) {
             >
               {task.todoName}
             </span>
+            <Timer mode="primary" startDeadline={task.create} deadline={task.deadline} />
             <span className="created">{`created ${timeAgo}`}</span>
           </label>
           <Edit onClick={() => updateEdit(task.id)} className="todo--edit" mode="primary" size="md" />

@@ -6,6 +6,7 @@ import "./NewTaskForm.css";
 import { TimerInput } from "../../../components/timerInput/TimerInput";
 import { validatePatternInput } from "../../../helpers/validatePatternInput";
 import { convertTime } from "../../../helpers/convertTime";
+import { parserTimerIso } from "../../../helpers/parserTimerIso";
 
 const templateTimerValue = {
   min: '',
@@ -31,19 +32,17 @@ function NewTaskForm({ setTodos }: INewTaskFormProps) {
       return
     }
 
-    const newId = uuid()
-
+    const create = new Date();
     const timer: ITimer = convertTime(timerValue.min, timerValue.sec)
 
-    console.log(timer)
-
     const todo: ITask = {
-      id: newId,
+      id: uuid(),
       todoName: value,
-      create: new Date(),
+      create,
       isComplited: false,
       status: "none",
       filter: "all",
+      deadline: parserTimerIso(create, timer)
     };
 
     setTodos((prev) => [...prev, todo]);

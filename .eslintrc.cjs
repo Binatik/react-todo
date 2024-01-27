@@ -12,6 +12,7 @@ module.exports = {
   rules: {
     "@typescript-eslint/ban-types": "off",
     "@typescript-eslint/ban-ts-comment": "off",
+    "react-hooks/exhaustive-deps": 'off',
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },

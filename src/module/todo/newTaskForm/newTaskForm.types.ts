@@ -14,6 +14,7 @@ export type ITask = {
   create: Date;
   status: "edit" | "none";
   filter: "all" | "active" | "complited";
+  deadline: Date
 };
 
 export type INewTaskFormProps = {

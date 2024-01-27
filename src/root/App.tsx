@@ -6,6 +6,8 @@ import { ITask } from "../module/todo/newTaskForm/newTaskForm.types";
 function App() {
   const [todos, setTodos] = useState<ITask[]>([]);
 
+  console.log(todos)
+
   return (
     <>
       <section className="todoapp">
