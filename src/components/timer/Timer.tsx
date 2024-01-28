@@ -53,7 +53,7 @@ const Timer = memo(function Timer({ mode, pause, onPause, onResume, onEnd, durat
 
   function playTimer() {
     if (pause) {
-      onResume(currentTimeRef.current)
+      onResume()
     }
   }
 

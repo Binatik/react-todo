@@ -25,7 +25,7 @@ function Task({ setTodos, task }: ITaskProps) {
 
   function updateComplited(id: typeof task.id) {
     setTodos((prev) => {
-      const newState = prev.map((item) => {
+      const newState = prev.map<ITask>((item) => {
         if (item.id === id) {
           return { ...item, isComplited: !item.isComplited };
         }
@@ -74,9 +74,7 @@ function Task({ setTodos, task }: ITaskProps) {
     setTodos((prev) => prev.filter((item) => item.id !== id));
   }
 
-  function onResume(timestamp: number) {
-    console.log(timestamp, 'timestamp')
-
+  function onResume() {
     if (!task.pausePoint) {
       return
     }
@@ -84,7 +82,6 @@ function Task({ setTodos, task }: ITaskProps) {
     const pauseDuration = Date.now() - task.pausePoint;
     const newDeadline = new Date(task.deadline.setTime(task.deadline.getTime() + pauseDuration));
 
-    console.log(task.deadline)
     setTodos((prev) => {
       return prev.map<ITask>((item) => {
         if (item.id === task.id) {
@@ -94,8 +91,6 @@ function Task({ setTodos, task }: ITaskProps) {
       })
     })
   }
-
-  console.log(task)
 
   function onPause(timestamp: number) {
     setTodos((prev) => {
@@ -116,8 +111,12 @@ function Task({ setTodos, task }: ITaskProps) {
   }
 
   function renderTimer() {
-    if (hasDeadline) {
+    if (hasDeadline && !task.isComplited) {
       return (<span className="timer__off">Время истекло</span>)
+    }
+
+    if (hasDeadline && task.isComplited) {
+      return (<span className="timer__off">Complited</span>)
     }
 
     return (<Timer
