@@ -9,6 +9,7 @@
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
     "format": "prettier ./src --write",
+    "postinstall": "husky install",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -41,16 +42,10 @@
     "typescript": "^5.2.2",
     "vite": "^5.0.8"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
-    "src/**/*.tsx": [
-      "npm run lint:fix",
-      "npm run format",
-      "git add"
+    "*.{js,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
     ]
   }
 }
