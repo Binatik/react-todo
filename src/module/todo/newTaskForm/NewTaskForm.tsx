@@ -9,31 +9,31 @@ import { convertTime } from "../../../helpers/convertTime";
 import { parserTimerIso } from "../../../helpers/parserTimerIso";
 
 const templateTimerValue = {
-  min: '',
-  sec: ''
-}
+  min: "",
+  sec: "",
+};
 
 function NewTaskForm({ setTodos }: INewTaskFormProps) {
   const [value, setValue] = useState("");
-  const [timerValue, setTimerValue] = useState(templateTimerValue)
+  const [timerValue, setTimerValue] = useState(templateTimerValue);
 
   function setTimerSec(value: string) {
-    setTimerValue((prev) => ({ ...prev, sec: value }))
+    setTimerValue((prev) => ({ ...prev, sec: value }));
   }
 
   function setTimerMin(value: string) {
-    setTimerValue((prev) => ({ ...prev, min: value }))
+    setTimerValue((prev) => ({ ...prev, min: value }));
   }
 
   function createTask(event: React.KeyboardEvent<HTMLFormElement>) {
-    event.preventDefault()
+    event.preventDefault();
 
     if (value.trim() === "") {
-      return
+      return;
     }
 
     const create = new Date();
-    const timer: ITimer = convertTime(timerValue.min, timerValue.sec)
+    const timer: ITimer = convertTime(timerValue.min, timerValue.sec);
 
     const todo: ITask = {
       id: uuid(),
@@ -45,14 +45,14 @@ function NewTaskForm({ setTodos }: INewTaskFormProps) {
       pausePoint: null,
       pauseTimestamp: null,
       pause: false,
-      deadline: parserTimerIso(create, timer)
+      deadline: parserTimerIso(create, timer),
     };
 
     setTodos((prev) => [...prev, todo]);
     setValue("");
     setTimerValue((prev) => {
-      return { ...prev, min: '', sec: '' }
-    })
+      return { ...prev, min: "", sec: "" };
+    });
   }
 
   return (
@@ -66,20 +66,24 @@ function NewTaskForm({ setTodos }: INewTaskFormProps) {
         placeholder="What needs to be done?"
         autoFocus
       />
-      <TimerInput mode="primary"
+      <TimerInput
+        mode="primary"
         onKeyDown={validatePatternInput}
         onChange={(event) => setTimerMin(event.currentTarget.value)}
         value={timerValue.min}
         maxLength={3}
         className="new-todo-form__timer"
-        placeholder="Min" />
-      <TimerInput mode="primary"
+        placeholder="Min"
+      />
+      <TimerInput
+        mode="primary"
         onKeyDown={validatePatternInput}
         onChange={(event) => setTimerSec(event.currentTarget.value)}
         value={timerValue.sec}
         maxLength={3}
         className="new-todo-form__timer"
-        placeholder="Sec" />
+        placeholder="Sec"
+      />
       <button type="submit"></button>
     </form>
   );

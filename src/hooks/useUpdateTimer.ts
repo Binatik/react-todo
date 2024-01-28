@@ -9,7 +9,7 @@ function useUpdateTimer() {
     setHours(Math.floor((remainingTime / (1000 * 60 * 60)) % 24));
     setMinutes(Math.floor((remainingTime / 1000 / 60) % 60));
     setSeconds(Math.floor((remainingTime / 1000) % 60));
-  }
+  };
 
   return {
     timer: {
@@ -18,7 +18,7 @@ function useUpdateTimer() {
       seconds,
     },
     setUpdateTimer,
-  }
+  };
 }
 
-export { useUpdateTimer }
+export { useUpdateTimer };

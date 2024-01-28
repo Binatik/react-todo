@@ -12,7 +12,7 @@ import "./Task.css";
 
 function Task({ setTodos, task }: ITaskProps) {
   const [value, setValue] = useState(task.todoName);
-  const [hasDeadline, setHasDeadline] = useState(false)
+  const [hasDeadline, setHasDeadline] = useState(false);
 
   const timeAgo = formatDistanceToNow(task.create, {
     addSuffix: true,
@@ -21,7 +21,7 @@ function Task({ setTodos, task }: ITaskProps) {
 
   const duration = task.pauseTimestamp
     ? task.pauseTimestamp
-    : task.deadline.getTime() - Date.now()
+    : task.deadline.getTime() - Date.now();
 
   function updateComplited(id: typeof task.id) {
     setTodos((prev) => {
@@ -47,7 +47,10 @@ function Task({ setTodos, task }: ITaskProps) {
     });
   }
 
-  function updateTodo(event: React.KeyboardEvent<HTMLInputElement>, id: typeof task.id) {
+  function updateTodo(
+    event: React.KeyboardEvent<HTMLInputElement>,
+    id: typeof task.id,
+  ) {
     if (event.code === "Enter") {
       if (value === "") {
         return;
@@ -76,20 +79,28 @@ function Task({ setTodos, task }: ITaskProps) {
 
   function onResume() {
     if (!task.pausePoint) {
-      return
+      return;
     }
 
     const pauseDuration = Date.now() - task.pausePoint;
-    const newDeadline = new Date(task.deadline.setTime(task.deadline.getTime() + pauseDuration));
+    const newDeadline = new Date(
+      task.deadline.setTime(task.deadline.getTime() + pauseDuration),
+    );
 
     setTodos((prev) => {
       return prev.map<ITask>((item) => {
         if (item.id === task.id) {
-          return { ...item, pausePoint: null, pauseTimestamp: null, pause: false, deadline: newDeadline }
+          return {
+            ...item,
+            pausePoint: null,
+            pauseTimestamp: null,
+            pause: false,
+            deadline: newDeadline,
+          };
         }
-        return item
-      })
-    })
+        return item;
+      });
+    });
   }
 
   function onPause(timestamp: number) {
@@ -98,41 +109,50 @@ function Task({ setTodos, task }: ITaskProps) {
         if (item.id === task.id) {
           return {
             ...item,
-            pausePoint: Date.now(), pauseTimestamp: timestamp, pause: true
-          }
+            pausePoint: Date.now(),
+            pauseTimestamp: timestamp,
+            pause: true,
+          };
         }
-        return item
-      })
-    })
+        return item;
+      });
+    });
   }
 
   function onEnd() {
-    setHasDeadline(true)
+    setHasDeadline(true);
   }
 
   function renderTimer() {
     if (hasDeadline && !task.isComplited) {
-      return (<span className="timer__off">Время истекло</span>)
+      return <span className="timer__off">Время истекло</span>;
     }
 
     if (hasDeadline && task.isComplited) {
-      return (<span className="timer__off">Complited</span>)
+      return <span className="timer__off">Complited</span>;
     }
 
-    return (<Timer
-      pause={task.pause}
-      onPause={onPause}
-      onResume={onResume}
-      onEnd={onEnd}
-      mode="primary"
-      duration={duration} />)
+    return (
+      <Timer
+        pause={task.pause}
+        onPause={onPause}
+        onResume={onResume}
+        onEnd={onEnd}
+        mode="primary"
+        duration={duration}
+      />
+    );
   }
 
   return (
     <>
       {task.status === "none" && (
         <div className="view">
-          <Checkbox defaultChecked={task.isComplited} onClick={() => updateComplited(task.id)} mode="primary" />
+          <Checkbox
+            defaultChecked={task.isComplited}
+            onClick={() => updateComplited(task.id)}
+            mode="primary"
+          />
           <label className="todo">
             <span
               className={classNames("description", {
@@ -144,8 +164,18 @@ function Task({ setTodos, task }: ITaskProps) {
             {renderTimer()}
             <span className="created">{`created ${timeAgo}`}</span>
           </label>
-          <Edit onClick={() => updateEdit(task.id)} className="todo--edit" mode="primary" size="md" />
-          <Delete onClick={() => deleteTask(task.id)} className="todo--delete" mode="primary" size="md" />
+          <Edit
+            onClick={() => updateEdit(task.id)}
+            className="todo--edit"
+            mode="primary"
+            size="md"
+          />
+          <Delete
+            onClick={() => deleteTask(task.id)}
+            className="todo--delete"
+            mode="primary"
+            size="md"
+          />
         </div>
       )}
 

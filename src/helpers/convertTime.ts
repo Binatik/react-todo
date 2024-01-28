@@ -13,8 +13,8 @@ function convertTime(minutesStr: string, secondsStr: string) {
     days: days,
     hours: remainingHours,
     minutes: convertedMinutes,
-    seconds: remainingSeconds
+    seconds: remainingSeconds,
   };
 }
 
-export {convertTime}
+export { convertTime };
