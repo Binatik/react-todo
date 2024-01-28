@@ -6,13 +6,14 @@ import { ITaskProps } from "./task.types";
 import { ITask } from "../newTaskForm/newTaskForm.types";
 import { formatDistanceToNow } from "date-fns/formatDistanceToNow";
 import classNames from "classnames";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Timer } from "../../../components/timer/Timer";
 import "./Task.css";
 
 function Task({ setTodos, task }: ITaskProps) {
   const [value, setValue] = useState(task.todoName);
   const [hasDeadline, setHasDeadline] = useState(false);
+  const timestampRef = useRef(0);
 
   const timeAgo = formatDistanceToNow(task.create, {
     addSuffix: true,
@@ -24,6 +25,14 @@ function Task({ setTodos, task }: ITaskProps) {
     : task.deadline.getTime() - Date.now();
 
   function updateComplited(id: typeof task.id) {
+    if (!task.isComplited && !task.pause) {
+      savePausePoint(timestampRef.current);
+    }
+
+    if (task.isComplited) {
+      getPausePoint();
+    }
+
     setTodos((prev) => {
       const newState = prev.map<ITask>((item) => {
         if (item.id === id) {
@@ -77,7 +86,7 @@ function Task({ setTodos, task }: ITaskProps) {
     setTodos((prev) => prev.filter((item) => item.id !== id));
   }
 
-  function onResume() {
+  function getPausePoint() {
     if (!task.pausePoint) {
       return;
     }
@@ -103,14 +112,16 @@ function Task({ setTodos, task }: ITaskProps) {
     });
   }
 
-  function onPause(timestamp: number) {
+  function savePausePoint(timestamp: number) {
+    timestampRef.current = timestamp;
+
     setTodos((prev) => {
       return prev.map<ITask>((item) => {
         if (item.id === task.id) {
           return {
             ...item,
             pausePoint: Date.now(),
-            pauseTimestamp: timestamp,
+            pauseTimestamp: timestampRef.current,
             pause: true,
           };
         }
@@ -128,15 +139,15 @@ function Task({ setTodos, task }: ITaskProps) {
       return <span className="timer__off">Время истекло</span>;
     }
 
-    if (hasDeadline && task.isComplited) {
+    if (task.isComplited) {
       return <span className="timer__off">Complited</span>;
     }
 
     return (
       <Timer
         pause={task.pause}
-        onPause={onPause}
-        onResume={onResume}
+        onPause={savePausePoint}
+        onResume={getPausePoint}
         onEnd={onEnd}
         mode="primary"
         duration={duration}

@@ -15,13 +15,12 @@ const Timer = memo(function Timer({
 }: ITimerProps) {
   const { setUpdateTimer, timer } = useUpdateTimer();
 
-  console.log("Произошел ререндор Timer" + " " + duration);
-
   const intervalRefId = useRef(0);
   const timeoutRefId = useRef(0);
   const currentTimeRef = useRef(duration < 1000 ? 0 : duration);
 
   useEffect(() => {
+    console.log("перерисовка");
     if (duration <= 0) {
       onEnd();
       return;
