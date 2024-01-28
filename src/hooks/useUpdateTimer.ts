@@ -1,14 +1,24 @@
 import { useState } from "react";
 
 function useUpdateTimer() {
-  const [hours, setHours] = useState(0);
-  const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(0);
+  const [hours, setHours] = useState("00");
+  const [minutes, setMinutes] = useState("00");
+  const [seconds, setSeconds] = useState("00");
 
   const setUpdateTimer = (remainingTime: number) => {
-    setHours(Math.floor((remainingTime / (1000 * 60 * 60)) % 24));
-    setMinutes(Math.floor((remainingTime / 1000 / 60) % 60));
-    setSeconds(Math.floor((remainingTime / 1000) % 60));
+    const hoursString = Math.floor((remainingTime / (1000 * 60 * 60)) % 24)
+      .toString()
+      .padStart(2, "0");
+    const minutesString = Math.floor((remainingTime / 1000 / 60) % 60)
+      .toString()
+      .padStart(2, "0");
+    const secondsString = Math.floor((remainingTime / 1000) % 60)
+      .toString()
+      .padStart(2, "0");
+
+    setHours(hoursString);
+    setMinutes(minutesString);
+    setSeconds(secondsString);
   };
 
   return {

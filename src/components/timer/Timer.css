@@ -7,11 +7,16 @@
 
 .timer--primary {
   display: block;
+  border-radius: 5px;
   padding: 2px 4px;
   transition: background-color 0.2s;
 }
 
 .timer__play {
+  color: #cc9a9a;
+}
+
+.timer__stop {
   color: #cc9a9a;
 }
 
