@@ -5,11 +5,6 @@
   font-size: 16px;
 }
 
-.timer__off {
-  color: gray;
-  font-size: 14px;
-}
-
 .timer--primary {
   display: block;
   padding: 2px 4px;

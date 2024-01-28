@@ -1,118 +1,91 @@
 import classNames from 'classnames';
 import { ITimerProps } from './Timer.types';
-import { memo, useEffect, useRef, useState } from 'react';
 import './Timer.css';
+import { memo, useEffect, useRef } from 'react';
+import { useUpdateTimer } from '../../hooks/useUpdateTimer';
 
-type ITrigger = 'stop' | 'play' | 'default';
-let templateTrigger: ITrigger = 'default';
+const Timer = memo(function Timer({ mode, pause, onPause, onResume, onEnd, duration, className }: ITimerProps) {
+  const { setUpdateTimer, timer } = useUpdateTimer()
 
-const Timer = memo(function Timer({ mode, setUpdateDeadline, startDeadline, lastDeadline, className }: ITimerProps) {
-  const [days, setDays] = useState(0);
-  const [hours, setHours] = useState(0);
-  const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(0);
-  const [trigger, setTrigger] = useState(templateTrigger);
-  const [hasDeadline, setHasDeadline] = useState(false)
+  console.log('Произошел ререндор Timer' + ' ' + duration)
 
-  const start = startDeadline.getTime();
-  const last = lastDeadline.getTime();
-
-  const idIntervalRef = useRef<null | number>(null);
+  const intervalRefId = useRef(0)
+  const timeoutRefId = useRef(0)
+  const currentTimeRef = useRef(duration < 1000 ? 0 : duration)
 
   useEffect(() => {
-    if (trigger === 'default') {
-      startInterval();
+    if (duration <= 0) {
+      onEnd()
+      return
     }
 
-    if (trigger === 'play') {
-      startInterval();
+    setUpdateTimer(currentTimeRef.current)
+
+    if (pause) {
+      return
     }
 
-    return () => {
-      stopInterval();
-    };
-  }, [trigger]);
+    intervalRefId.current = setInterval(() => {
+      currentTimeRef.current -= 1000
+      setUpdateTimer(currentTimeRef.current)
 
-  function startInterval() {
-    stopInterval();
-
-    let currentTime = last;
-
-    idIntervalRef.current = setInterval(() => {
-      currentTime -= 1000; // уменьшаем время на 1 секунду
-
-      if (currentTime < start) {
-        stopInterval(); // останавливаем интервал, если достигли start
-        setHasDeadline(true)
+      if (currentTimeRef.current <= 0) {
+        clearInterval(intervalRefId.current)
+        setUpdateTimer(0)
+        onEnd()
       }
+    }, 1000)
 
-      const remainingTime = new Date(currentTime - start);
-      setUpdateDeadline(new Date(currentTime))
-
-      setDays(Math.floor(remainingTime.getTime() / (1000 * 60 * 60 * 24)));
-      setHours(Math.floor((remainingTime.getTime() / (1000 * 60 * 60)) % 24));
-      setMinutes(Math.floor((remainingTime.getTime() / 1000 / 60) % 60));
-      setSeconds(Math.floor((remainingTime.getTime() / 1000) % 60));
-    }, 1000);
-  }
-
-  function stopInterval() {
-    if (idIntervalRef.current) {
-      clearInterval(idIntervalRef.current);
-      idIntervalRef.current = null;
-    }
-  }
-
-  function onPlayTimer() {
-    if (trigger === 'default' || trigger === 'play') {
-      return;
-    }
-
-    setTrigger('play');
-    templateTrigger = 'play';
-  }
+    return (() => onStopTimer())
+  }, [duration, pause])
 
   function onStopTimer() {
-    stopInterval();
-    setTrigger('stop');
-    templateTrigger = 'stop';
+    clearTimeout(timeoutRefId.current)
+    clearInterval(intervalRefId.current);
   }
 
-  function renderTimer() {
-    return (
-      <div className="timer">
-        <button type="button" className="button--hidden">
-          Заглушка
-        </button>
-        <button
-          onClick={onPlayTimer}
-          type="button"
-          className={classNames('timer__play', className, {
-            ['timer--primary']: mode === 'primary',
-          })}
-        >
-          ▶
-        </button>
-        <button
-          onClick={onStopTimer}
-          type="button"
-          className={classNames('timer__stop', className, {
-            ['timer--primary']: mode === 'primary',
-          })}
-        >
-          ⏸
-        </button>
-        <span>
-          {days}:{hours}:{minutes}:{seconds}
-        </span>
-      </div>
-    );
+  function pauseTimer() {
+    if (!pause) {
+      onStopTimer()
+      onPause(currentTimeRef.current)
+    }
   }
 
-  return hasDeadline ? (
-    <span className="timer__off">Время истекло</span>
-  ) : (
-    renderTimer()
+  function playTimer() {
+    if (pause) {
+      onResume(currentTimeRef.current)
+    }
+  }
+
+  return (
+    <div className="timer">
+      <button type="button" className="button--hidden">
+        Заглушка
+      </button>
+      <button
+        onClick={playTimer}
+        disabled={!pause}
+        type="button"
+        className={classNames('timer__play', className, {
+          ['timer--primary']: mode === 'primary',
+        })}
+      >
+        ▶
+      </button>
+      <button
+        onClick={pauseTimer}
+        type="button"
+        disabled={pause}
+        className={classNames('timer__stop', className, {
+          ['timer--primary']: mode === 'primary',
+        })}
+      >
+        ⏸
+      </button>
+      <span>
+        {timer.hours}:{timer.minutes}:{timer.seconds}
+      </span>
+    </div>
   );
 });
 

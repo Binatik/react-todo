@@ -6,29 +6,23 @@ import { ITaskProps } from "./task.types";
 import { ITask } from "../newTaskForm/newTaskForm.types";
 import { formatDistanceToNow } from "date-fns/formatDistanceToNow";
 import classNames from "classnames";
-import "./Task.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Timer } from "../../../components/timer/Timer";
+import "./Task.css";
 
 function Task({ setTodos, task }: ITaskProps) {
   const [value, setValue] = useState(task.todoName);
-  const [updateDeadline, setUpdateDeadline] = useState(task.deadline)
+  const [hasDeadline, setHasDeadline] = useState(false)
 
   const timeAgo = formatDistanceToNow(task.create, {
     addSuffix: true,
     includeSeconds: true,
   });
 
-  useEffect(() => {
-    setTodos((prev) => {
-      return prev.map((_task) => {
-        if (task.id === _task.id) {
-          return { ...task, deadline: updateDeadline } as ITask
-        }
-        return _task
-      })
-    })
-  }, [updateDeadline])
+  const duration = task.pauseTimestamp
+    ? task.pauseTimestamp
+    : task.deadline.getTime() - Date.now()
+
   function updateComplited(id: typeof task.id) {
     setTodos((prev) => {
       const newState = prev.map((item) => {
@@ -80,6 +74,61 @@ function Task({ setTodos, task }: ITaskProps) {
     setTodos((prev) => prev.filter((item) => item.id !== id));
   }
 
+  function onResume(timestamp: number) {
+    console.log(timestamp, 'timestamp')
+
+    if (!task.pausePoint) {
+      return
+    }
+
+    const pauseDuration = Date.now() - task.pausePoint;
+    const newDeadline = new Date(task.deadline.setTime(task.deadline.getTime() + pauseDuration));
+
+    console.log(task.deadline)
+    setTodos((prev) => {
+      return prev.map<ITask>((item) => {
+        if (item.id === task.id) {
+          return { ...item, pausePoint: null, pauseTimestamp: null, pause: false, deadline: newDeadline }
+        }
+        return item
+      })
+    })
+  }
+
+  console.log(task)
+
+  function onPause(timestamp: number) {
+    setTodos((prev) => {
+      return prev.map<ITask>((item) => {
+        if (item.id === task.id) {
+          return {
+            ...item,
+            pausePoint: Date.now(), pauseTimestamp: timestamp, pause: true
+          }
+        }
+        return item
+      })
+    })
+  }
+
+  function onEnd() {
+    setHasDeadline(true)
+  }
+
+  function renderTimer() {
+    if (hasDeadline) {
+      return (<span className="timer__off">Время истекло</span>)
+    }
+
+    return (<Timer
+      pause={task.pause}
+      onPause={onPause}
+      onResume={onResume}
+      onEnd={onEnd}
+      mode="primary"
+      duration={duration} />)
+  }
+
   return (
     <>
       {task.status === "none" && (
@@ -93,7 +142,7 @@ function Task({ setTodos, task }: ITaskProps) {
             >
               {task.todoName}
             </span>
-            <Timer mode="primary" setUpdateDeadline={setUpdateDeadline} startDeadline={task.create} lastDeadline={updateDeadline} />
+            {renderTimer()}
             <span className="created">{`created ${timeAgo}`}</span>
           </label>
           <Edit onClick={() => updateEdit(task.id)} className="todo--edit" mode="primary" size="md" />

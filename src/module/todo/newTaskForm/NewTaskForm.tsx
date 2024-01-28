@@ -42,6 +42,9 @@ function NewTaskForm({ setTodos }: INewTaskFormProps) {
       isComplited: false,
       status: "none",
       filter: "all",
+      pausePoint: null,
+      pauseTimestamp: null,
+      pause: false,
       deadline: parserTimerIso(create, timer)
     };
 

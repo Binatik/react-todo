@@ -1,10 +1,10 @@
-import { HTMLAttributes } from "react";
+import { HTMLAttributes} from "react";
 
 export type ITimerProps = {
   mode: 'primary'
-  lastDeadline: Date;
-  startDeadline: Date;
-
-  //Стейт который требуется для обновления state из вне. ::Date
-  setUpdateDeadline: React.Dispatch<React.SetStateAction<Date>>
-} & HTMLAttributes<HTMLDivElement>;
+  onPause: (timestamp: number) => void
+  onResume: (timestamp: number) => void
+  onEnd: () => void
+  pause: boolean
+  duration: number;
+} & Omit<HTMLAttributes<HTMLDivElement>, 'onPause'>

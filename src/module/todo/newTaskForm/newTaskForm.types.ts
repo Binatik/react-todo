@@ -11,6 +11,9 @@ export type ITask = {
   id: string;
   todoName: string;
   isComplited: boolean;
+  pause: boolean
+  pausePoint: null | number
+  pauseTimestamp: null | number
   create: Date;
   status: "edit" | "none";
   filter: "all" | "active" | "complited";

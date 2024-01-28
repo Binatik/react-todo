@@ -28,6 +28,11 @@
   right: 50px;
 }
 
+.timer__off {
+  color: gray;
+  font-size: 15px;
+}
+
 .todo--delete {
   margin: auto 0 7px;
   right: 15px;

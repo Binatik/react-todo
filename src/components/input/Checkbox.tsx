@@ -1,8 +1,8 @@
 import classNames from "classnames";
-import { IInput } from "./Input.types";
+import { IInputProps } from "./Input.types";
 import "./Checkbox.css";
 
-function Checkbox({ mode, className, ...props }: IInput) {
+function Checkbox({ mode, className, ...props }: IInputProps) {
   return (
     <>
       <input
