@@ -17,16 +17,17 @@ const Timer = memo(function Timer({
 
   const intervalRefId = useRef(0);
   const timeoutRefId = useRef(0);
-  const currentTimeRef = useRef(duration < 1000 ? 0 : duration);
+  const currentTimeRef = useRef(duration);
 
   useEffect(() => {
-    console.log("перерисовка");
+    setUpdateTimer(currentTimeRef.current);
+  }, []);
+
+  useEffect(() => {
     if (duration <= 0) {
       onEnd();
       return;
     }
-
-    setUpdateTimer(currentTimeRef.current);
 
     if (pause) {
       return;
@@ -38,13 +39,12 @@ const Timer = memo(function Timer({
 
       if (currentTimeRef.current <= 0) {
         clearInterval(intervalRefId.current);
-        setUpdateTimer(0);
         onEnd();
       }
     }, 1000);
 
     return () => onStopTimer();
-  }, [duration, pause]);
+  }, [pause]);
 
   function onStopTimer() {
     clearTimeout(timeoutRefId.current);

@@ -1,53 +1,56 @@
 import { List } from "../../../components/list/List";
 import { Task } from "../Task/Task";
 import { TasksFilter } from "../tasksFilter/TasksFilter";
-import { ITaskFilter, ITodoProps } from "./todo.types";
-import { useEffect, useState } from "react";
-
+import { ITodoProps } from "./todo.types";
+import { useMemo } from "react";
 import "./Todo.css";
 
 function Todo({ setTodos, tasks }: ITodoProps) {
-  const [filterTasks, setFilterTasks] = useState<ITaskFilter[]>([]);
+  const filterTasks = useMemo(() => {
+    if (!tasks.length) {
+      return tasks;
+    }
+
+    const filter = tasks[0].filter;
+
+    if (filter === "complited") {
+      return tasks.filter((task) => task.isComplited);
+    } else if (filter === "all") {
+      return tasks;
+    } else if (filter === "active") {
+      return tasks.filter((task) => !task.isComplited);
+    }
+
+    return [];
+  }, [tasks]);
+
+  const notComplitedTasks = useMemo(() => getNotComplitedTasks(), [tasks]);
 
   function getNotComplitedTasks() {
     return tasks.filter((item) => !item.isComplited).length;
   }
 
-  useEffect(() => {
-    setFilterTasks(tasks);
-  }, [tasks]);
-
-  useEffect(() => {
-    if (tasks.length && tasks[0].filter === "complited") {
-      const complitedTasks = tasks.filter((task) => task.isComplited);
-      setFilterTasks(complitedTasks);
+  function renderTask() {
+    if (!tasks.length) {
+      return <span className="todo-init">Вы пока не создали задачу!</span>;
     }
 
-    if (tasks.length && tasks[0].filter === "all") {
-      setFilterTasks(tasks);
-    }
-
-    if (tasks.length && tasks[0].filter === "active") {
-      const activeTasks = tasks.filter((task) => !task.isComplited);
-      setFilterTasks(activeTasks);
-    }
-  }, [tasks]);
+    return filterTasks.map((task) => (
+      <li key={task.id} className="todo-item">
+        <Task task={task} setTodos={setTodos} />
+      </li>
+    ));
+  }
 
   return (
     <>
       <List mode="primary" className="todo-list">
-        {filterTasks.length
-          ? filterTasks.map((task) => (
-              <li key={task.id} className="todo-item">
-                <Task task={task} setTodos={setTodos} />
-              </li>
-            ))
-          : null}
+        {renderTask()}
       </List>
       <TasksFilter
         tasks={tasks}
         setTodos={setTodos}
-        counter={getNotComplitedTasks()}
+        counter={notComplitedTasks}
       />
     </>
   );

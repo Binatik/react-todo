@@ -26,21 +26,20 @@ function Task({ setTodos, task }: ITaskProps) {
 
   function updateComplited(id: typeof task.id) {
     if (!task.isComplited && !task.pause) {
-      savePausePoint(timestampRef.current);
+      saveTimestampTimer(timestampRef.current);
     }
 
     if (task.isComplited) {
-      getPausePoint();
+      updateDeadline();
     }
 
     setTodos((prev) => {
-      const newState = prev.map<ITask>((item) => {
+      return prev.map<ITask>((item) => {
         if (item.id === id) {
           return { ...item, isComplited: !item.isComplited };
         }
         return item;
       });
-      return newState;
     });
   }
 
@@ -86,7 +85,7 @@ function Task({ setTodos, task }: ITaskProps) {
     setTodos((prev) => prev.filter((item) => item.id !== id));
   }
 
-  function getPausePoint() {
+  function updateDeadline() {
     if (!task.pausePoint) {
       return;
     }
@@ -112,7 +111,7 @@ function Task({ setTodos, task }: ITaskProps) {
     });
   }
 
-  function savePausePoint(timestamp: number) {
+  function saveTimestampTimer(timestamp: number) {
     timestampRef.current = timestamp;
 
     setTodos((prev) => {
@@ -146,8 +145,8 @@ function Task({ setTodos, task }: ITaskProps) {
     return (
       <Timer
         pause={task.pause}
-        onPause={savePausePoint}
-        onResume={getPausePoint}
+        onPause={saveTimestampTimer}
+        onResume={updateDeadline}
         onEnd={onEnd}
         mode="primary"
         duration={duration}
