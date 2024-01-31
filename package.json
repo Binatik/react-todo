@@ -10,7 +10,8 @@
     "lint:fix": "eslint ./src --fix",
     "format": "prettier ./src --write",
     "postinstall": "husky install",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "vercel": "vercel"
   },
   "dependencies": {
     "@types/uuid": "^9.0.7",

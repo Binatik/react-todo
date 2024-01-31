@@ -84,7 +84,7 @@ const Timer = memo(function Timer({
         type="button"
         disabled={pause}
         className={classNames("timer__stop", className, {
-          ["timer--primary"]: mode === "primary",
+          "timer--primary": mode === "primary",
         })}
       >
         ⏸

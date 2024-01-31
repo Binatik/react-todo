@@ -4,7 +4,7 @@
 
 ---
 
-<img width="1162" alt="image" src="https://github.com/Binatik/images/assets/47430210/c5db9199-701a-4993-b111-7d40e8fa315a">
+<img width="1162" alt="image" src="https://github.com/Binatik/images/assets/47430210/3f9862b8-b6a5-494c-8207-2c8bea677ee0">
 
 ## Проверить
 
