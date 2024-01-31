@@ -18,6 +18,7 @@ function validatePatternInput(event: IEvent, pattern: RegExp = /^[0-9\b]$/i) {
 
   if (!pattern.test(event.target.value)) {
     event.preventDefault();
+    return;
   }
 }
 
