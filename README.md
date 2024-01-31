@@ -8,7 +8,7 @@
 
 ## Проверить
 
-Проверить последнюю версию web приложения Production [здесь](https://react-todo-6rv2leew9-binatik.vercel.app).
+Проверить последнюю версию web приложения Production [здесь](https://react-todo-binatik.vercel.app).
 ###### ``Создание задачи при нажатии на Enter в первом поле где 
 ``What needs to be done?``
 

@@ -11,7 +11,7 @@
     "format": "prettier ./src --write",
     "postinstall": "husky install",
     "preview": "vite preview",
-    "vercel": "vercel"
+    "vercel": "now"
   },
   "dependencies": {
     "@types/uuid": "^9.0.7",

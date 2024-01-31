@@ -65,6 +65,28 @@ function NewTaskForm({ setTodos }: INewTaskFormProps) {
     });
   }
 
+  function renderSubmit() {
+    if (value.trim() !== "") {
+      return (
+        <button className="button-submit" type="submit">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="#1C274C"
+              stroke-linecap="round"
+              stroke-width="1.5"
+              d="M3 12v6.967c0 2.31 2.534 3.769 4.597 2.648l3.203-1.742M3 8V5.033c0-2.31 2.534-3.769 4.597-2.648l12.812 6.968a2.998 2.998 0 0 1 0 5.294l-6.406 3.484"
+            />
+          </svg>
+        </button>
+      );
+    }
+    return <button className="button-submit" type="submit"></button>;
+  }
+
   return (
     <form onSubmit={createTask} className="new-todo-form">
       <Input
@@ -78,7 +100,6 @@ function NewTaskForm({ setTodos }: INewTaskFormProps) {
       />
       <TimerInput
         mode="primary"
-        required
         onKeyDown={isValidatePatternInput}
         onChange={(event) => validateMin(event)}
         value={timerValue.min}
@@ -96,9 +117,7 @@ function NewTaskForm({ setTodos }: INewTaskFormProps) {
         className="new-todo-form__timer"
         placeholder="Sec"
       />
-      <button className="button-submit" type="submit">
-        ✖️
-      </button>
+      {renderSubmit()}
     </form>
   );
 }

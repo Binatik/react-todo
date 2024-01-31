@@ -25,6 +25,10 @@ function Task({ setTodos, task }: ITaskProps) {
     : task.deadline.getTime() - Date.now();
 
   function updateComplited(id: typeof task.id) {
+    if (hasDeadline) {
+      return;
+    }
+
     if (!task.isComplited && !task.pause) {
       saveTimestampTimer(timestampRef.current);
     }
@@ -59,26 +63,28 @@ function Task({ setTodos, task }: ITaskProps) {
     event: React.KeyboardEvent<HTMLInputElement>,
     id: typeof task.id,
   ) {
-    if (event.code === "Enter") {
-      if (value === "") {
-        return;
-      }
-
-      setTodos((prev) => {
-        const newState = prev.map<ITask>((item) => {
-          if (item.id === id) {
-            return {
-              ...item,
-              todoName: value,
-              status: "none",
-              create: new Date(),
-            };
-          }
-          return item;
-        });
-        return newState;
-      });
+    if (event.key !== "Enter") {
+      return;
     }
+
+    if (value.trim() === "") {
+      return;
+    }
+
+    setTodos((prev) => {
+      const newState = prev.map<ITask>((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            todoName: value,
+            status: "none",
+            create: new Date(),
+          };
+        }
+        return item;
+      });
+      return newState;
+    });
   }
 
   function deleteTask(id: typeof task.id) {
@@ -159,6 +165,7 @@ function Task({ setTodos, task }: ITaskProps) {
       {task.status === "none" && (
         <div className="view">
           <Checkbox
+            disabled={hasDeadline}
             defaultChecked={task.isComplited}
             onClick={() => updateComplited(task.id)}
             mode="primary"
@@ -176,6 +183,7 @@ function Task({ setTodos, task }: ITaskProps) {
           </label>
           <Edit
             onClick={() => updateEdit(task.id)}
+            disabled={task.isComplited || hasDeadline}
             className="todo--edit"
             mode="primary"
             size="md"
