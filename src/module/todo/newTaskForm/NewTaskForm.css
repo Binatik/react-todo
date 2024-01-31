@@ -14,3 +14,14 @@
   flex: 1;
   padding: 16px;
 }
+
+.button-submit {
+  margin: 2px 18px;
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .button-submit {
+   display: none;
+  }
+}

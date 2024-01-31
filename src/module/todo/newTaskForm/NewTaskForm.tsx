@@ -4,7 +4,7 @@ import { v4 as uuid } from "uuid";
 import { ChangeEvent, useState } from "react";
 import "./NewTaskForm.css";
 import { TimerInput } from "../../../components/timerInput/TimerInput";
-import { validatePatternInput } from "../../../helpers/validatePatternInput";
+import { isValidatePatternInput } from "../../../helpers/isValidatePatternInput";
 import { convertTime } from "../../../helpers/convertTime";
 import { parserTimerIso } from "../../../helpers/parserTimerIso";
 
@@ -18,16 +18,20 @@ function NewTaskForm({ setTodos }: INewTaskFormProps) {
   const [timerValue, setTimerValue] = useState(templateTimerValue);
 
   function validateSec(event: ChangeEvent<HTMLInputElement>) {
-    const value = event.target.value;
-    validatePatternInput(event);
+    if (isValidatePatternInput(event)) {
+      return;
+    }
 
+    const value = event.target.value;
     setTimerValue((prev) => ({ ...prev, sec: value }));
   }
 
   function validateMin(event: ChangeEvent<HTMLInputElement>) {
-    const value = event.target.value;
-    validatePatternInput(event);
+    if (isValidatePatternInput(event)) {
+      return;
+    }
 
+    const value = event.target.value;
     setTimerValue((prev) => ({ ...prev, min: value }));
   }
 
@@ -74,7 +78,8 @@ function NewTaskForm({ setTodos }: INewTaskFormProps) {
       />
       <TimerInput
         mode="primary"
-        onKeyDown={validatePatternInput}
+        required
+        onKeyDown={isValidatePatternInput}
         onChange={(event) => validateMin(event)}
         value={timerValue.min}
         maxLength={3}
@@ -83,14 +88,17 @@ function NewTaskForm({ setTodos }: INewTaskFormProps) {
       />
       <TimerInput
         mode="primary"
-        onKeyDown={validatePatternInput}
+        required
+        onKeyDown={isValidatePatternInput}
         onChange={(event) => validateSec(event)}
         value={timerValue.sec}
         maxLength={3}
         className="new-todo-form__timer"
         placeholder="Sec"
       />
-      <button type="submit"></button>
+      <button className="button-submit" type="submit">
+        ✖️
+      </button>
     </form>
   );
 }

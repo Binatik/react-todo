@@ -4,7 +4,7 @@ type IEvent =
   | React.KeyboardEvent<HTMLInputElement>
   | ChangeEvent<HTMLInputElement>;
 
-function validatePatternInput(event: IEvent, pattern: RegExp = /^[0-9\b]$/i) {
+function isValidatePatternInput(event: IEvent, pattern: RegExp = /^\d*$/) {
   if ("key" in event) {
     if (event.key === "Backspace") {
       return;
@@ -14,12 +14,12 @@ function validatePatternInput(event: IEvent, pattern: RegExp = /^[0-9\b]$/i) {
       event.preventDefault();
     }
     return;
-  }
-
-  if (!pattern.test(event.target.value)) {
-    event.preventDefault();
-    return;
+  } else {
+    if (!event.target.value.match(pattern)) {
+      event.preventDefault();
+      return true;
+    }
   }
 }
 
-export { validatePatternInput };
+export { isValidatePatternInput };
