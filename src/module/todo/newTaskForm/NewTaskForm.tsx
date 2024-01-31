@@ -1,7 +1,7 @@
 import { Input } from "../../../components/input/Input";
 import { ITask, INewTaskFormProps, ITimer } from "./newTaskForm.types";
 import { v4 as uuid } from "uuid";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import "./NewTaskForm.css";
 import { TimerInput } from "../../../components/timerInput/TimerInput";
 import { validatePatternInput } from "../../../helpers/validatePatternInput";
@@ -17,11 +17,17 @@ function NewTaskForm({ setTodos }: INewTaskFormProps) {
   const [value, setValue] = useState("");
   const [timerValue, setTimerValue] = useState(templateTimerValue);
 
-  function setTimerSec(value: string) {
+  function validateSec(event: ChangeEvent<HTMLInputElement>) {
+    const value = event.target.value;
+    validatePatternInput(event);
+
     setTimerValue((prev) => ({ ...prev, sec: value }));
   }
 
-  function setTimerMin(value: string) {
+  function validateMin(event: ChangeEvent<HTMLInputElement>) {
+    const value = event.target.value;
+    validatePatternInput(event);
+
     setTimerValue((prev) => ({ ...prev, min: value }));
   }
 
@@ -69,7 +75,7 @@ function NewTaskForm({ setTodos }: INewTaskFormProps) {
       <TimerInput
         mode="primary"
         onKeyDown={validatePatternInput}
-        onChange={(event) => setTimerMin(event.currentTarget.value)}
+        onChange={(event) => validateMin(event)}
         value={timerValue.min}
         maxLength={3}
         className="new-todo-form__timer"
@@ -78,7 +84,7 @@ function NewTaskForm({ setTodos }: INewTaskFormProps) {
       <TimerInput
         mode="primary"
         onKeyDown={validatePatternInput}
-        onChange={(event) => setTimerSec(event.currentTarget.value)}
+        onChange={(event) => validateSec(event)}
         value={timerValue.sec}
         maxLength={3}
         className="new-todo-form__timer"
