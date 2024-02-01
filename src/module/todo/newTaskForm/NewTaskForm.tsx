@@ -44,6 +44,7 @@ function NewTaskForm({ setTodos }: INewTaskFormProps) {
 
     const create = new Date();
     const timer: ITimer = convertTime(timerValue.min, timerValue.sec);
+    const deadline = parserTimerIso(create, timer);
 
     const todo: ITask = {
       id: uuid(),
@@ -52,10 +53,10 @@ function NewTaskForm({ setTodos }: INewTaskFormProps) {
       isComplited: false,
       status: "none",
       filter: "all",
-      pausePoint: null,
-      pauseTimestamp: null,
-      pause: false,
-      deadline: parserTimerIso(create, timer),
+      pausePoint: Date.now(),
+      pauseTimestamp: deadline.getTime() - Date.now(),
+      pause: true,
+      deadline,
     };
 
     setTodos((prev) => [...prev, todo]);
@@ -76,8 +77,8 @@ function NewTaskForm({ setTodos }: INewTaskFormProps) {
           >
             <path
               stroke="#1C274C"
-              stroke-linecap="round"
-              stroke-width="1.5"
+              strokeLinecap="round"
+              strokeWidth="1.5"
               d="M3 12v6.967c0 2.31 2.534 3.769 4.597 2.648l3.203-1.742M3 8V5.033c0-2.31 2.534-3.769 4.597-2.648l12.812 6.968a2.998 2.998 0 0 1 0 5.294l-6.406 3.484"
             />
           </svg>
@@ -100,7 +101,6 @@ function NewTaskForm({ setTodos }: INewTaskFormProps) {
       />
       <TimerInput
         mode="primary"
-        onKeyDown={isValidatePatternInput}
         onChange={(event) => validateMin(event)}
         value={timerValue.min}
         maxLength={3}
@@ -110,7 +110,6 @@ function NewTaskForm({ setTodos }: INewTaskFormProps) {
       <TimerInput
         mode="primary"
         required
-        onKeyDown={isValidatePatternInput}
         onChange={(event) => validateSec(event)}
         value={timerValue.sec}
         maxLength={3}
